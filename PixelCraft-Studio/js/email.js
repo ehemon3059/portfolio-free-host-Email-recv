@@ -31,7 +31,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // 'api-key': '' // Replace with your actual Brevo API key
+          'api-key': 'process.env.BREVO_API_KEY' // Replace with your actual Brevo API key
         },
         body: JSON.stringify(data)
       });

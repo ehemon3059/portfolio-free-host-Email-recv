@@ -1,0 +1,19 @@
+name: Deploy Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run a script
+      env:
+        BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+      run: echo "Using API key: $BREVO_API_KEY"
