@@ -1,8 +1,8 @@
-
   document.getElementById('contact_form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent the default form submission
 
-    alert("this is working");
+    alert("This is working");
+
 
     // Gather form data
     const name = document.getElementById('name').value.trim();
@@ -12,40 +12,42 @@
 
     // Check for empty fields
     if (!name || !email || !phone || !message) {
-      document.querySelector('.response-message').innerText = 'Please fill out all fields.';
-      return;
+        document.querySelector('.response-message').innerText = 'Please fill out all fields.';
+        return;
     }
 
     // Prepare data for Brevo
     const data = {
-      sender: { name: name, email: email },
-      to: [{ email: 'no.one3059@gmail.com', name: 'Recipient Name' }], // Replace with your recipient email
-      subject: 'New Contact Form Submission',
-      htmlContent: `<h1>Contact Form Submission</h1>
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Phone:</strong> ${phone}</p>
-                    <p><strong>Message:</strong> ${message}</p>`
+        sender: { name: name, email: email }, // Use a verified sender email
+        to: [{ email: 'no.one3059@gmail.com', name: 'Recipient Name' }], // Replace with your recipient email
+        subject: 'New Contact Form Submission',
+        htmlContent: `<h1>Contact Form Submission</h1>
+                      <p><strong>Name:</strong> ${name}</p>
+                      <p><strong>Email:</strong> ${email}</p>
+                      <p><strong>Phone:</strong> ${phone}</p>
+                      <p><strong>Message:</strong> ${message}</p>`
     };
 
-    try {
-      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': 'process.env.BREVO_API_KEY' // Replace with your actual Brevo API key
-        },
-        body: JSON.stringify(data)
-      });
 
-      if (response.ok) {
-        document.querySelector('.response-message').innerText = 'Your message has been sent successfully!';
-        document.getElementById('contact_form').reset(); // Clear the form fields
-      } else {
-        throw new Error('Failed to send your message. Please try again later.');
-      }
+    try {
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+               'api-key': process.env.BREVO_API_KEY // Replace with your actual Brevo API key
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            document.querySelector('.response-message').innerText = 'Your message has been sent successfully!';
+            document.getElementById('contact_form').reset(); // Clear the form fields
+        } else {
+            const errorData = await response.json();  // Get error details from response
+            throw new Error(errorData.message || 'Failed to send your message. Please try again later.');
+        }
     } catch (error) {
-      document.querySelector('.response-message').innerText = `Error: ${error.message}`;
+        document.querySelector('.response-message').innerText = `Error: ${error.message}`;
     }
-  });
+});
 
