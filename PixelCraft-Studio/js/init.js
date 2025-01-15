@@ -17,30 +17,26 @@ function aali_tm_popup(){"use strict";jQuery('.gallery_zoom').each(function(){jQ
 function aali_tm_portfolio(){"use strict";if(jQuery().isotope){var filter=jQuery('.aali_tm_portfolio .portfolio_filter ul');if(filter.length){filter.find('a').on('click',function(){var element=jQuery(this);var selector=element.attr('data-filter');var list=element.closest('.aali_tm_portfolio').find('.portfolio_list').children('ul');list.isotope({filter:selector,animationOptions:{duration:750,easing:'linear',queue:false}});filter.find('a').removeClass('current');element.addClass('current');return false;});}}}
 function aali_tm_data_images(){"use strict";var data=jQuery('*[data-img-url]');data.each(function(){var element=jQuery(this);var url=element.data('img-url');element.css({backgroundImage:'url('+url+')'});});}
 function aali_tm_contact_form(){"use strict";jQuery(".contact_form #send_message").on('click',function(){var name=jQuery(".contact_form #name").val();var email=jQuery(".contact_form #email").val();var message=jQuery(".contact_form #message").val();var subject=jQuery(".contact_form #subject").val();var success=jQuery(".contact_form .returnmessage").data('success');jQuery(".contact_form .returnmessage").empty();if(name===''||email===''||message===''){jQuery('div.empty_notice').slideDown(500).delay(2000).slideUp(500);}
-else{// Simulate the success or failure behavior without actually sending data
-    jQuery(".contact_form").on("submit", function(event) {
-        event.preventDefault(); // Prevent the default form submission
-    
-        // Gather form data (for simulation purposes)
-        const ajax_name = jQuery("#name").val();
-        const ajax_email = jQuery("#email").val();
-        const ajax_message = jQuery("#message").val();
-        const ajax_subject = jQuery("#subject").val();
-    
-        // Simulate success response
-        const simulatedSuccess = true; // Set to false to simulate failure
-    
-        if (simulatedSuccess) {
-            jQuery(".contact_form .returnmessage").append("<span class='contact_success'>Message Sent Successfully!</span>");
-            jQuery(".contact_form .returnmessage").slideDown(500).delay(4000).slideUp(500);
-        } else {
-            jQuery(".contact_form .returnmessage").append("<span class='contact_error'>Failed to send message. Please try again.</span>");
-            jQuery(".contact_form .returnmessage").slideDown(500).delay(4000).slideUp(500);
-        }
-    });
-    
-      }
-if(data===""){jQuery("#contact_form")[0].reset();}});}
+else{
+//     jQuery.post("modal/contact.php", {
+//     ajax_name: name,
+//     ajax_email: email,
+//     ajax_message: message,
+//     ajax_subject: subject
+//   }, function(data) {
+//     jQuery(".contact_form .returnmessage").append(data);
+//     if (jQuery(".contact_form .returnmessage span.contact_error").length) {
+//       jQuery(".contact_form .returnmessage").slideDown(500).delay(2000).slideUp(500);
+//     } else {
+//       jQuery(".contact_form .returnmessage").append("<span class='contact_success'>" + success + "</span>");
+//       jQuery(".contact_form .returnmessage").slideDown(500).delay(4000).slideUp(500);
+//     }
+//     if (data === "") {
+//       jQuery("#contact_form")[0].reset();
+//     }
+//   });
+
+}
 return false;});}
 function aali_tm_jarallax(){"use strict";jQuery('.jarallax').each(function(){var element=jQuery(this);var customSpeed=element.data('speed');if(customSpeed!=="undefined"&&customSpeed!==""){customSpeed=customSpeed;}else{customSpeed=0.5;}
 element.jarallax({speed:customSpeed,automaticResize:true,videoVolume:0,});});}
