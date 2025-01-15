@@ -2,6 +2,8 @@
   document.getElementById('contact_form').addEventListener('submit', async function (event) {
     event.preventDefault(); // Prevent the default form submission
 
+    alert("this is working");
+
     // Gather form data
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
